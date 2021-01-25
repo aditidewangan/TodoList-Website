@@ -122,7 +122,12 @@ app.get("/about",function(req,res){
   res.render("about");
 });
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 4040;
+}
+app.listen(port);
 
-app.listen(4040 , function(){
-  console.log("Server is running on port 4040.");
+app.listen(port , function(){
+  console.log("Server has started Successfully.");
 });
