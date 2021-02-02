@@ -28,8 +28,6 @@ h1 {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #F1F1F1;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 
 .item:last-child {

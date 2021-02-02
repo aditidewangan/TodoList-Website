@@ -18,12 +18,6 @@ const itemsSchema = {
 
 const Item = mongoose.model("Item" , itemsSchema);
 
-const item1 = new Item({
-  name : "Welcome!!!"
-});
-
-const defaultItems = [item1];
-
 const listSchema = {
   name : String,
   item : [itemsSchema]
@@ -34,19 +28,9 @@ const List = mongoose.model("List" , listSchema);
 app.get("/" , function(req,res){
 
   Item.find({},function(err , foundItems){
-  if(foundItems.length===0){
-    Item.insertMany(defaultItems , function(err){
-      if(err){
-        console.log(err);
-      }else{
-        console.log("Successfully Saved");
-      }
-    });
-    res.redirect("/");
-  }else{
+
         res.render("list",{listTitle : "Today" , newItem : foundItems });
-      };
-  })
+  });
 });
 
 app.get("/:customListName",function(req,res){
@@ -57,7 +41,6 @@ app.get("/:customListName",function(req,res){
       if(!foundList){
         const list = new List({
           name : customListName,
-          item : defaultItems
         });
         list.save();
         res.redirect("/" + customListName);
@@ -110,16 +93,6 @@ app.post("/delete" , function(req,res){
       }
     });
   }
-});
-
-app.get("/work",function(req,res){
-
-  res.render("list" , {listTitle : "Work List" , newItem : workItems});
-
-});
-
-app.get("/about",function(req,res){
-  res.render("about");
 });
 
 let port = process.env.PORT;
